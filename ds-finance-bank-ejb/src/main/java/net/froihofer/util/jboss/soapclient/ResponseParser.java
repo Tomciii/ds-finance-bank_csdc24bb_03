@@ -16,11 +16,11 @@ public class ResponseParser {
     }
 
     public static String extractSoapBodyContent(String soapXml) {
-        int start = soapXml.indexOf("<soapenv:Body>");
-        int end = soapXml.indexOf("</soapenv:Body>");
+        int start = soapXml.indexOf("<soap:Body>");
+        int end = soapXml.indexOf("</soap:Body>");
 
         if (start != -1 && end != -1) {
-            return soapXml.substring(start + "<soapenv:Body>".length(), end);
+            return soapXml.substring(start + "<soapenv:Body>".length() - 3, end);
         } else {
             return soapXml; // Return the original XML if <soapenv:Body> not found
         }
@@ -30,7 +30,7 @@ public class ResponseParser {
         JAXBContext jaxbContext = JAXBContext.newInstance(FindStockQuotesByCompanyNameResponse.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-        // Use a StringReader to read the XML content
+     //   xml = xml.replace(" xmlns:ns2=\"http://trading.ws.dsfinance.froihofer.net/\"","");
         StringReader reader = new StringReader(xml);
 
         // Unmarshal the XML into your Java object
