@@ -42,5 +42,6 @@ public class BankClient {
   public static void main(String[] args) {
     BankClient client = new BankClient();
     client.run();
+    System.out.println();
   }
 }

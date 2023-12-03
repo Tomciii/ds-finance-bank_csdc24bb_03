@@ -3,9 +3,12 @@ net\froihofer\dsfinance\ws\trading\Buy.class
 net\froihofer\dsfinance\ws\trading\TradingWSException.class
 net\froihofer\dsfinance\ws\trading\FindStockQuotesByCompanyNameResponse.class
 net\froihofer\util\jboss\WildflyAuthDBHelper.class
+net\froihofer\util\jboss\SoapClient.class
+net\froihofer\util\jboss\ResponseParser.class
 net\froihofer\dsfinance\ws\trading\Sell.class
 net\froihofer\dsfinance\ws\trading\GetStockQuotes.class
 net\froihofer\dsfinance\ws\trading\TradingWSException_Exception.class
+net\froihofer\util\jboss\HttpAuthentication.class
 net\froihofer\dsfinance\ws\trading\BuyResponse.class
 net\froihofer\dsfinance\ws\trading\GetStockQuoteHistoryResponse.class
 net\froihofer\dsfinance\ws\trading\ObjectFactory.class

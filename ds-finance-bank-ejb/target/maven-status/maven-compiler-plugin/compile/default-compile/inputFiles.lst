@@ -6,9 +6,12 @@ E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-ban
 E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\target\generated-sources\wsimport\net\froihofer\dsfinance\ws\trading\package-info.java
 E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\target\generated-sources\wsimport\net\froihofer\dsfinance\ws\trading\SellResponse.java
 E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\target\generated-sources\wsimport\net\froihofer\dsfinance\ws\trading\TradingWebService.java
+E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\src\main\java\net\froihofer\util\jboss\ResponseParser.java
 E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\target\generated-sources\wsimport\net\froihofer\dsfinance\ws\trading\BuyResponse.java
+E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\src\main\java\net\froihofer\util\jboss\HttpAuthentication.java
 E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\target\generated-sources\wsimport\net\froihofer\dsfinance\ws\trading\TradingWSException.java
 E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\target\generated-sources\wsimport\net\froihofer\dsfinance\ws\trading\GetStockQuoteHistoryResponse.java
+E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\src\main\java\net\froihofer\util\jboss\SoapClient.java
 E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\target\generated-sources\wsimport\net\froihofer\dsfinance\ws\trading\GetStockQuoteHistory.java
 E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\target\generated-sources\wsimport\net\froihofer\dsfinance\ws\trading\PublicStockQuote.java
 E:\Studium\5th Semester\VS\New folder\ds-finance-bank_csdc24bb_03\ds-finance-bank-ejb\target\generated-sources\wsimport\net\froihofer\dsfinance\ws\trading\GetStockQuotes.java
