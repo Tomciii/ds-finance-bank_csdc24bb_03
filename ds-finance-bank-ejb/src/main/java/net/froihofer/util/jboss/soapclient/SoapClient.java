@@ -10,24 +10,16 @@ public class SoapClient {
     public static void main(String[] args) throws Exception {
 
         FindStockQuotesByCompanyNameResponse apple = findStockQuotesByCompanyName("Apple");
-
     }
 
     public static FindStockQuotesByCompanyNameResponse findStockQuotesByCompanyName(String input) throws IOException, JAXBException {
-        String soapRequest = Requests.findStockQuotesByCompanyName(input);
-
+        String soapRequest = SoapRequests.findStockQuotesByCompanyName(input);
         HttpURLConnection connection = SoapClientProperties.getHttpURLConnection();
 
         sendRequest(soapRequest, connection);
 
         try (InputStream is = connection.getInputStream()) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            StringBuilder responseContent = new StringBuilder();
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                responseContent.append(line);
-            }
+            StringBuilder responseContent = getResponse(is);
 
             System.out.println("Response Message: " + responseContent);
 
@@ -35,6 +27,17 @@ public class SoapClient {
         } finally {
             connection.disconnect();
         }
+    }
+
+    private static StringBuilder getResponse(InputStream is) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder responseContent = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            responseContent.append(line);
+        }
+        return responseContent;
     }
 
     private static void sendRequest(String soapRequest, HttpURLConnection connection) throws IOException {

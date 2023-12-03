@@ -13,8 +13,6 @@ public class ResponseParser {
             String xmlContent = extractSoapBodyContent(soapXmlResponse);
 
             return parseXml(xmlContent);
-
-
     }
 
     public static String extractSoapBodyContent(String soapXml) {

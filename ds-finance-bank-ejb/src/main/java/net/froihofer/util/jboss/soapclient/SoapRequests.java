@@ -1,6 +1,6 @@
 package net.froihofer.util.jboss.soapclient;
 
-public class Requests {
+public class SoapRequests {
 
     public static String findStockQuotesByCompanyName(String input) {
         return "<soapenv:Envelope xmlns:soapenv=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" \" +\n" +
