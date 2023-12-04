@@ -1,8 +1,7 @@
 package net.froihofer.util.jboss.soapclient;
 
 import jakarta.xml.bind.JAXBException;
-import net.froihofer.dsfinance.ws.trading.BuyResponse;
-import net.froihofer.dsfinance.ws.trading.FindStockQuotesByCompanyNameResponse;
+import net.froihofer.dsfinance.ws.trading.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -37,6 +36,57 @@ public class SoapRequests {
             System.out.println("Response Message: " + responseContent);
 
             return SoapResponseUnmarshaller.extract(responseContent.toString(), BuyResponse.class);
+        } finally {
+            connection.disconnect();
+        }
+    }
+
+    public static SellResponse sell(String symbol, int shares) throws IOException, JAXBException {
+        String soapRequest = SoapRequestBuilder.sell(symbol, shares);
+        HttpURLConnection connection = SoapClientProperties.getHttpURLConnection();
+
+        sendRequest(soapRequest, connection);
+
+        try (InputStream is = connection.getInputStream()) {
+            StringBuilder responseContent = getResponse(is);
+
+            System.out.println("Response Message: " + responseContent);
+
+            return SoapResponseUnmarshaller.extract(responseContent.toString(), SellResponse.class);
+        } finally {
+            connection.disconnect();
+        }
+    }
+
+    public static GetStockQuotesResponse getStockQuotes(String symbol) throws IOException, JAXBException {
+        String soapRequest = SoapRequestBuilder.getStockQuotes(symbol);
+        HttpURLConnection connection = SoapClientProperties.getHttpURLConnection();
+
+        sendRequest(soapRequest, connection);
+
+        try (InputStream is = connection.getInputStream()) {
+            StringBuilder responseContent = getResponse(is);
+
+            System.out.println("Response Message: " + responseContent);
+
+            return SoapResponseUnmarshaller.extract(responseContent.toString(), GetStockQuotesResponse.class);
+        } finally {
+            connection.disconnect();
+        }
+    }
+
+    public static GetStockQuoteHistoryResponse getStockQuoteHistory(String symbol) throws IOException, JAXBException {
+        String soapRequest = SoapRequestBuilder.getStockQuoteHistory(symbol);
+        HttpURLConnection connection = SoapClientProperties.getHttpURLConnection();
+
+        sendRequest(soapRequest, connection);
+
+        try (InputStream is = connection.getInputStream()) {
+            StringBuilder responseContent = getResponse(is);
+
+            System.out.println("Response Message: " + responseContent);
+
+            return SoapResponseUnmarshaller.extract(responseContent.toString(), GetStockQuoteHistoryResponse.class);
         } finally {
             connection.disconnect();
         }

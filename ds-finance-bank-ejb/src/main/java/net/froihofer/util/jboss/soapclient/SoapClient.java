@@ -1,25 +1,29 @@
 package net.froihofer.util.jboss.soapclient;
 
 import jakarta.xml.bind.JAXBException;
-import net.froihofer.dsfinance.ws.trading.BuyResponse;
-import net.froihofer.dsfinance.ws.trading.FindStockQuotesByCompanyNameResponse;
+import net.froihofer.dsfinance.ws.trading.*;
 
 import java.io.*;
 
 public class SoapClient {
-    public static void main(String[] args) throws Exception {
-
-        FindStockQuotesByCompanyNameResponse apple = findStockQuotesByCompanyName("Apple");
-    //    BuyResponse apple2 = buy("Apple", 2);
-    //    System.out.println(apple2);
-    }
-
-    public static FindStockQuotesByCompanyNameResponse findStockQuotesByCompanyName(String input) throws JAXBException, IOException {
-        return SoapRequests.findStockQuotesByCompanyName(input);
+    public static FindStockQuotesByCompanyNameResponse findStockQuotesByCompanyName(String companyName) throws JAXBException, IOException {
+        return SoapRequests.findStockQuotesByCompanyName(companyName);
     }
 
     public static BuyResponse buy(String symbol, int shares) throws JAXBException, IOException {
         return SoapRequests.buy(symbol, shares);
     }
 
+    public static SellResponse sell(String symbol, int shares) throws JAXBException, IOException {
+        return SoapRequests.sell(symbol, shares);
+    }
+
+    public static GetStockQuotesResponse getStockQuotes(String symbol) throws JAXBException, IOException {
+        return SoapRequests.getStockQuotes(symbol);
+    }
+
+    // Will return Status 401 (Unauthorized) - Wir kommen nicht auf diesen Endpoint
+    public static GetStockQuoteHistoryResponse getStockQuoteHistory(String symbol) throws JAXBException, IOException {
+        return SoapRequests.getStockQuoteHistory(symbol);
+    }
 }
