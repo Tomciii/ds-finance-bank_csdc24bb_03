@@ -1,6 +1,7 @@
 package net.froihofer.util.jboss.soapclient;
 
 import jakarta.xml.bind.JAXBException;
+import net.froihofer.dsfinance.ws.trading.BuyResponse;
 import net.froihofer.dsfinance.ws.trading.FindStockQuotesByCompanyNameResponse;
 
 import java.io.*;
@@ -18,7 +19,24 @@ public class SoapRequests {
 
             System.out.println("Response Message: " + responseContent);
 
-            return ResponseParser.extract(responseContent.toString());
+            return SoapResponseUnmarshaller.extract(responseContent.toString(), FindStockQuotesByCompanyNameResponse.class);
+        } finally {
+            connection.disconnect();
+        }
+    }
+
+    public static BuyResponse buy(String symbol, int shares) throws IOException, JAXBException {
+        String soapRequest = SoapRequestBuilder.buy(symbol, shares);
+        HttpURLConnection connection = SoapClientProperties.getHttpURLConnection();
+
+        sendRequest(soapRequest, connection);
+
+        try (InputStream is = connection.getInputStream()) {
+            StringBuilder responseContent = getResponse(is);
+
+            System.out.println("Response Message: " + responseContent);
+
+            return SoapResponseUnmarshaller.extract(responseContent.toString(), BuyResponse.class);
         } finally {
             connection.disconnect();
         }

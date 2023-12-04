@@ -7,8 +7,8 @@ import java.util.Base64;
 
 public class SoapClientProperties {
 
-    private static final String username = "";
-    private static final String password = "";
+    private static final String username = "csdc24bb_03";
+    private static final String password = "oF0Queuhae";
 
     private static String getBasicAuthHeader() {
         String credentials = username + ":" + password;
