@@ -58,7 +58,7 @@ public class SoapRequestBuilder {
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
                 "      <trad:getStockQuoteHistory>\n" +
-                "         <symbols>" + symbol + "</symbols>\n" +
+                "         <symbol>" + symbol + "</symbol>\n" +
                 "      </trad:getStockQuoteHistory>\n" +
                 "   </soapenv:Body>\n" +
                 "</soapenv:Envelope>";

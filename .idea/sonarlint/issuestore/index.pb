@@ -9,7 +9,7 @@ Pds-finance-bank-client/src/main/java/net/froihofer/util/AuthCallbackHandler.jav
 Tds-finance-bank-client/src/main/java/net/froihofer/util/WildflyJndiLookupHelper.java,9\2\92277f25e20487c02cf5412747bc1e4653b3bacd
 _
 /ds-finance-bank-web/src/main/webapp/index.xhtml,9\4\941c58b282c6c0b063765e868fbd76d034af8e52
-ƒ
-Sds-finance-bank-ejb/src/main/java/net/froihofer/util/jboss/WildflyAuthDBHelper.java,2\2\224943c582f7c9559247e6bc8df09d139380dfe0
 ˆ
 Xds-finance-bank-client/src/main/java/net/froihofer/dsfinance/bank/client/BankClient.java,2\3\23de45c82c2607b4b1e732ed8bb4ec7f4975e302
+K
+ds-finance-bank-ejb/pom.xml,5\0\5094f71e38faf2e4bcb527ebe25509effe843834
