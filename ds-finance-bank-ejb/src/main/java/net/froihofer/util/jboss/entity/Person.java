@@ -1,4 +1,4 @@
-package net.froihofer.util.jboss;
+package net.froihofer.util.jboss.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;

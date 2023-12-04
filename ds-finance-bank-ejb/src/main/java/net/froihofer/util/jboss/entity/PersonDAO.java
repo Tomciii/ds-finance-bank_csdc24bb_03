@@ -1,4 +1,4 @@
-package net.froihofer.util.jboss;
+package net.froihofer.util.jboss.entity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

@@ -6,22 +6,45 @@ import javax.inject.Inject;
 
 import common.BankingInterface;
 import common.BankingInterfaceException;
+import jakarta.xml.bind.JAXBException;
+import net.froihofer.util.jboss.entity.*;
+import net.froihofer.util.jboss.soapclient.*;
+import net.froihofer.util.jboss.trading.*;
+
+import java.io.IOException;
+
 
 @Stateless(name="BankingInterfaceService")
 @PermitAll
 public class BankingInterfaceImpl implements BankingInterface {
 
-    @Inject PersonDAO personDAO;
-    @Inject PersonTranslator personTranslator;
+    @Inject
+    PersonDAO personDAO;
+    @Inject
+    PersonTranslator personTranslator;
 
-    Bank bank = new Bank();
+    private final Bank bank = new Bank();
 
     public boolean login(String username, String password) throws BankingInterfaceException {
-        System.out.println("Test");
+        System.out.println("TestA");
         System.out.println(username);
         if(username=="test" && password=="test"){
+            try {
+                bank.getFindStockQuotesByCompanyNameResponse();
+            } catch (JAXBException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             return true;
         }else{
+            try {
+                bank.getFindStockQuotesByCompanyNameResponse();
+            } catch (JAXBException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             return true;
         }
     }
@@ -73,8 +96,15 @@ public class BankingInterfaceImpl implements BankingInterface {
 
     @Override
     public String getInvestableVolume() throws BankingInterfaceException {
-        return "Test";
+        try {
+            return bank.getFindStockQuotesByCompanyNameResponse().toString();
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     @Override
     public long getVariable(String name) throws BankingInterfaceException {
