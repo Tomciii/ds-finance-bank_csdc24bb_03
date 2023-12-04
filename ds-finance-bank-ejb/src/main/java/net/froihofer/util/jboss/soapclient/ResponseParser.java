@@ -1,10 +1,13 @@
 package net.froihofer.util.jboss.soapclient;
 
 import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 import net.froihofer.dsfinance.ws.trading.FindStockQuotesByCompanyNameResponse;
+import net.froihofer.dsfinance.ws.trading.ObjectFactory;
 
+import javax.xml.transform.stream.StreamSource;
 import java.io.StringReader;
 
 public class ResponseParser {
@@ -15,7 +18,7 @@ public class ResponseParser {
             return parseXml(xmlContent);
     }
 
-    public static String extractSoapBodyContent(String soapXml) {
+    private static String extractSoapBodyContent(String soapXml) {
         int start = soapXml.indexOf("<soap:Body>");
         int end = soapXml.indexOf("</soap:Body>");
 
@@ -29,11 +32,8 @@ public class ResponseParser {
     public static FindStockQuotesByCompanyNameResponse parseXml(String xml) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(FindStockQuotesByCompanyNameResponse.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
-     //   xml = xml.replace(" xmlns:ns2=\"http://trading.ws.dsfinance.froihofer.net/\"","");
         StringReader reader = new StringReader(xml);
-
-        // Unmarshal the XML into your Java object
-        return (FindStockQuotesByCompanyNameResponse) jaxbUnmarshaller.unmarshal(reader);
+        JAXBElement<FindStockQuotesByCompanyNameResponse> jaxbElement = jaxbUnmarshaller.unmarshal(new StreamSource(reader), FindStockQuotesByCompanyNameResponse.class);
+        return jaxbElement.getValue();
     }
 }
