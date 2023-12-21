@@ -1,14 +1,8 @@
 package net.froihofer.dsfinance.bank.client.customer;
 
 public class BankClient {
-  private BankClientConsole bankClientConsole = new BankClientConsole();
-
   public static void main(String[] args) {
-    BankClient client = new BankClient();
-    client.run();
-  }
-
-  private void run() {
+    BankClientConsole bankClientConsole = new BankClientConsole();
     bankClientConsole.processInput();
   }
 }
