@@ -45,7 +45,7 @@ class BankClientInputHandler {
     public void buyStockForCustomer() {
         System.out.println("Buying Stock: ");
         String customerID = CommonInputHandler.getCustomerID();
-        String stockName = CommonInputHandler.getStockName();
+        String stockName = CommonInputHandler.getStockSymbol();
         Double amount = CommonInputHandler.getAmount();
 
         try {
@@ -58,7 +58,7 @@ class BankClientInputHandler {
     public void sellStockForCustomer() {
         System.out.println("Selling Stock: ");
         String customerID = CommonInputHandler.getCustomerID();
-        String stockName = CommonInputHandler.getStockName();
+        String stockName = CommonInputHandler.getStockSymbol();
         Double amount = CommonInputHandler.getAmount();
 
         try {

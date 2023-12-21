@@ -97,8 +97,6 @@ public class BankingInterfaceImpl implements BankingInterface {
         }
     }
 
-    // TODO - Return something like a StockDTO which is in the commons so that client can also access the dto (Like The "PersonTranslator" class)
-    // TODO - Catch a BankingInterfaceException here (And throw one inside the logic where needed)
     @Override
     public ListStockDTO searchStockByName(String name) throws BankingInterfaceException {
 

@@ -57,7 +57,7 @@ public class BankService {
 
         depotDAO.persist(new Depot(1,1,new ArrayList<>()));
         customerDAO.persist(new Customer(1,"test","test","test",1));
-        bankDAO.persist(new Bank(1, "TestBank", 100000.0));
+        bankDAO.persist(new Bank(1, "TestBank", 100_000.0));
     }
 
     public FindStockQuotesByCompanyNameResponse getFindStockQuotesByCompanyNameResponse(String name) throws JAXBException, IOException {

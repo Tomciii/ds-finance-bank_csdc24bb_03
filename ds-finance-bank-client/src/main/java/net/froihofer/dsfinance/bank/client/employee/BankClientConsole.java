@@ -21,7 +21,6 @@ class BankClientConsole {
         System.out.print("Input> ");
         String input = scanner.nextLine();
 
-        // TODO - Implement rest of the inputhandler methods
         switch (input) {
             case "1": inputHandler.addCustomer(); break;
             case "2": inputHandler.searchCustomer(); break;
