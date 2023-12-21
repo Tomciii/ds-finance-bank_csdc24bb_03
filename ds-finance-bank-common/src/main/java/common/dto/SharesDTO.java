@@ -1,12 +1,14 @@
 package common.dto;
 
-public class SharesDTO {
+import java.io.Serializable;
+
+public class SharesDTO implements Serializable {
 
     private DepotDTO depot;
 
     private String stockName;
 
-    private int stockShares;
+    private double stockShares;
 
     public SharesDTO(DepotDTO depot, String stockName, int stockShares) {
         this.depot = depot;
@@ -34,19 +36,18 @@ public class SharesDTO {
         this.stockName = stockName;
     }
 
-    public int getStockShares() {
+    public double getStockShares() {
         return stockShares;
     }
 
-    public void setStockShares(int stockShares) {
+    public void setStockShares(double stockShares) {
         this.stockShares = stockShares;
     }
 
     @Override
     public String toString() {
         return "SharesDTO{" +
-                "depot=" + depot +
-                ", stockName='" + stockName + '\'' +
+                "stockName='" + stockName + '\'' +
                 ", stockShares=" + stockShares +
                 '}';
     }

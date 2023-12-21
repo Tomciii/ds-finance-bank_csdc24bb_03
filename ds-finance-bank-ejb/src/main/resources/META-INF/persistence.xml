@@ -1,87 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-  <persistence-unit name="ds-finance-bank-persunit" transaction-type="JTA">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <jta-data-source>java:/datasources/DsFinanceBankDS</jta-data-source>
-    <class>net.froihofer.util.jboss.persistance.entity.Person</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="sa"/>
-      <property name="javax.persistence.jdbc.password" value="sa"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/ds-finance-bank"/>
-    </properties>
-  </persistence-unit>
-
-  <persistence-unit name="ds-finance-bank-customerunit" transaction-type="JTA">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <jta-data-source>java:/datasources/DsFinanceBankDS</jta-data-source>
-    <class>net.froihofer.util.jboss.persistance.entity.Customer</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="sa"/>
-      <property name="javax.persistence.jdbc.password" value="sa"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/ds-finance-bank"/>
-    </properties>
-  </persistence-unit>
-
-  <persistence-unit name="ds-finance-bank-employeeunit" transaction-type="JTA">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <jta-data-source>java:/datasources/DsFinanceBankDS</jta-data-source>
-    <class>net.froihofer.util.jboss.persistance.entity.Employee</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="sa"/>
-      <property name="javax.persistence.jdbc.password" value="sa"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/ds-finance-bank"/>
-    </properties>
-  </persistence-unit>
 
   <persistence-unit name="ds-finance-bank-depotunit" transaction-type="JTA">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <jta-data-source>java:/datasources/DsFinanceBankDS</jta-data-source>
     <class>net.froihofer.util.jboss.persistance.entity.Depot</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="sa"/>
-      <property name="javax.persistence.jdbc.password" value="sa"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/ds-finance-bank"/>
-    </properties>
-  </persistence-unit>
-
-  <persistence-unit name="ds-finance-bank-sharesunit" transaction-type="JTA">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <jta-data-source>java:/datasources/DsFinanceBankDS</jta-data-source>
+    <class>net.froihofer.util.jboss.persistance.entity.Employee</class>
+    <class>net.froihofer.util.jboss.persistance.entity.Bank</class>
+    <class>net.froihofer.util.jboss.persistance.entity.Customer</class>
     <class>net.froihofer.util.jboss.persistance.entity.Shares</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="sa"/>
-      <property name="javax.persistence.jdbc.password" value="sa"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/ds-finance-bank"/>
-    </properties>
-  </persistence-unit>
-
-  <persistence-unit name="ds-finance-bank-bankunit" transaction-type="JTA">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <jta-data-source>java:/datasources/DsFinanceBankDS</jta-data-source>
-    <class>net.froihofer.util.jboss.persistance.entity.Bank</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
       <property name="javax.persistence.jdbc.user" value="sa"/>

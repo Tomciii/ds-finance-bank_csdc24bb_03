@@ -15,12 +15,11 @@ class BankClientConsole {
         boolean isProcessing = true;
         this.displayActions();
 
-        while (isProcessing){
+        while (isProcessing) {
          System.out.println(" ");
          System.out.print("Input> ");
         String input = scanner.nextLine();
 
-        // TODO - Implement rest of the inputhandler methods
         switch (input) {
             case "1": inputHandler.searchStockByName(); break;
             case "2": inputHandler.buyStock(); break;

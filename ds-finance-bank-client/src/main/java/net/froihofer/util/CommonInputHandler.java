@@ -42,6 +42,16 @@ public class CommonInputHandler {
         return stock;
     }
 
+    public static String getCustomerID() {
+        String stock = "";
+        while (stock.isEmpty()){
+            System.out.print("Type in customer ID> ");
+            stock = scanner.nextLine();
+        }
+
+        return stock;
+    }
+
     public static String getFirstName() {
         String stock = "";
         while (stock.isEmpty()){
@@ -73,10 +83,11 @@ public class CommonInputHandler {
         return stock;
     }
 
-    public static void printDepotInfo(String customerNr, BankingInterface bankingInterface) {
+    public static void printDepotInfo(int customerNr, BankingInterface bankingInterface) {
         try {
             System.out.println("Loading Depot Info: ");
-            DepotDTO depotDTO = bankingInterface.getDepot("customer1");
+            DepotDTO depotDTO = bankingInterface.getDepot(customerNr);
+            System.out.println(depotDTO);
         } catch (BankingInterfaceException e) {
             e.printStackTrace();
         }
@@ -125,6 +136,7 @@ public class CommonInputHandler {
 
     public static void searchStockByName(BankingInterface bankingInterface) {
         try {
+            System.out.println("Searching Stock: ");
             String stock = getStockName();
             System.out.println("Searching for stock " + stock + "...");
             ListStockDTO result = bankingInterface.searchStockByName(stock);

@@ -1,13 +1,41 @@
 package net.froihofer.util.jboss.persistance.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name="CUSTOMER")
-public class Customer extends Person implements Serializable {
+public class Customer implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name="CUSTOMERNR")
     private int customernr;
+
+    @Column(name="GIVENNAME")
+    private String givenname;
+
+    @Column(name="NAME")
+    protected String name;
+
+    @Column(name="ADDRESS")
+    protected String addresse;
+
+    @Column(name = "BANKDEPOTID")
+    private int bankDepotID;
+
+    public Customer(int customernr, String name, String givenname, String addresse, int bankDepotID) {
+        this.customernr = customernr;
+        this.name = name;
+        this.addresse = addresse;
+        this.givenname = givenname;
+        this.bankDepotID = bankDepotID;
+    }
+
+    public Customer() {
+
+    }
 
     public int getBankDepotID() {
         return bankDepotID;
@@ -17,24 +45,13 @@ public class Customer extends Person implements Serializable {
         this.bankDepotID = bankDepotID;
     }
 
-    public Customer(int customernr, int bankDepotID) {
-        this.customernr = customernr;
-        this.bankDepotID = bankDepotID;
-    }
 
-    public Customer(int svnr, String name, String givenname, String address, String username, String password, int customernr, int bankDepotID) {
-        super(svnr, name, givenname, address, username, password);
-        this.customernr = customernr;
-        this.bankDepotID = bankDepotID;
-    }
-
-    private int bankDepotID;
 
     public int getCustomerNr() {
         return customernr;
     }
 
-    public Customer(){}
+
 
 
     public void setCustomerNr(int customerNr) {
@@ -49,17 +66,50 @@ public class Customer extends Person implements Serializable {
         this.customernr = customernr;
     }
 
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public String getGivenname() {
+        return givenname;
+    }
+
+    public void setGivenname(String givenname) {
+        this.givenname = givenname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddresse() {
+        return addresse;
+    }
+
+    public void setAddresse(String addresse) {
+        this.addresse = addresse;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
-                "customernr=" + customernr +
-                ", bankDepotID=" + bankDepotID +
-                ", svnr=" + svnr +
-                ", name='" + name + '\'' +
+                "id=" + id +
+                ", customernr=" + customernr +
                 ", givenname='" + givenname + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", address='" + address + '\'' +
+                ", name='" + name + '\'' +
+                ", addresse='" + addresse + '\'' +
+                ", bankDepotID=" + bankDepotID +
                 '}';
     }
 }

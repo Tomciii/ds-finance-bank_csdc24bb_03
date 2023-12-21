@@ -16,9 +16,9 @@ public class Bank implements Serializable {
     private String bankName;
 
     @Column(name="INVESTABLEVOLUME")
-    private String investableVolume;
+    private Double investableVolume;
 
-    public Bank(int id, String bankName, String investableVolume) {
+    public Bank(int id, String bankName, Double investableVolume) {
         this.id = id;
         this.bankName = bankName;
         this.investableVolume = investableVolume;
@@ -36,11 +36,11 @@ public class Bank implements Serializable {
         this.bankName = bankName;
     }
 
-    public String getInvestableVolume() {
+    public Double getInvestableVolume() {
         return investableVolume;
     }
 
-    public void setInvestableVolume(String investableVolume) {
+    public void setInvestableVolume(Double investableVolume) {
         this.investableVolume = investableVolume;
     }
 

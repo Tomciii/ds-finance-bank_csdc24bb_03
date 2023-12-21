@@ -2,25 +2,33 @@ package net.froihofer.util.jboss.persistance.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 @Table(name="EMPLOYEE")
-public class Employee extends Person implements Serializable {
+public class Employee implements Serializable {
 
+    @Id
     @Column(name="MANR")
     private int MANR;
 
+    String name;
+    String givenname;
+    String address;
+    String username;
+    String password;
+
     public Employee(){}
 
-    public Employee(int customerNr) {
-        this.MANR = customerNr;
-    }
-
-    public Employee(int svnr, String name, String givenname, String address, String username, String password, int customerNr) {
-        super(svnr, name, givenname, address, username, password);
-        this.MANR = customerNr;
+    public Employee(int MANR, String name, String givenname, String address, String username, String password) {
+        this.MANR = MANR;
+        this.name = name;
+        this.givenname = givenname;
+        this.address = address;
+        this.username = username;
+        this.password = password;
     }
 
     public int getCustomerNr() {
@@ -30,10 +38,11 @@ public class Employee extends Person implements Serializable {
     public void setCustomerNr(int customerNr) {
         this.MANR = customerNr;
     }
+
     @Override
     public String toString() {
         return "Person{" +
-                "svnr=" + svnr +
+
                 ", name='" + name + '\'' +
                 ", givenname='" + givenname + '\'' +
                 ", username='" + username + '\'' +

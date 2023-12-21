@@ -14,6 +14,11 @@ public class DepotMapper {
     SharesMapper sharesMapper;
 
     public DepotDTO toDepotDTO(Depot depot) {
+
+        if (depot == null) {
+            return null;
+        }
+
         DepotDTO depotDTO = new DepotDTO();
 
         depotDTO.setId(depot.getId());

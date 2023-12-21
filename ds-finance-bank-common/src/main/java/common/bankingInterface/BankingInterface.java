@@ -26,13 +26,13 @@ public interface BankingInterface {
 
     void sellStockByISIN(TradeDTO tradeDTO) throws BankingInterfaceException;
 
-    PersonDTO createEmployee(int svnr, String name, String givenname, String address, String username, String password, int customerNr);
+    DepotDTO getDepot(int customerNr) throws BankingInterfaceException;
 
-    DepotDTO getDepot(String customerNr) throws BankingInterfaceException;
+    void createPerson(String name, String givenname, String address, int svnr, String username, String password);
 
-    PersonDTO createPerson(String name, String givenname, String address, int svnr, String username, String password);
+    String createCustomer(String name, String givenname, String address, int svnr, String username, String password);
 
-    PersonDTO createCustomer(String name, String givenname, String address, int svnr, String username, String password);
+    void createEmployee(int snvt);
 
     // TODO: Return Person
     PersonDTO searchCustomer(Integer customerNr)  throws BankingInterfaceException;

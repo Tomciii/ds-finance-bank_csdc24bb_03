@@ -6,6 +6,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "shares")
 public class Shares implements Serializable {
+    @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -14,12 +15,14 @@ public class Shares implements Serializable {
     @JoinColumn(name = "depot_id", referencedColumnName = "id")
     private Depot depot;
 
+    @Column(name="STOCKNAME")
     private String stockName;
 
-    private int stockShares;
+    @Column(name="STOCKSHARES")
+    private double stockShares;
 
-    public Shares(int id, Depot depot, String stockName, int stockShares) {
-        this.id = id;
+    public Shares( Depot depot, String stockName, double stockShares) {
+
         this.depot = depot;
         this.stockName = stockName;
         this.stockShares = stockShares;
@@ -54,11 +57,11 @@ public class Shares implements Serializable {
         this.stockName = stockName;
     }
 
-    public int getStockShares() {
+    public double getStockShares() {
         return stockShares;
     }
 
-    public void setStockShares(int stockShares) {
+    public void setStockShares(double stockShares) {
         this.stockShares = stockShares;
     }
 
@@ -66,7 +69,6 @@ public class Shares implements Serializable {
     public String toString() {
         return "Shares{" +
                 "id=" + id +
-                ", depot=" + depot +
                 ", stockName='" + stockName + '\'' +
                 ", stockShares=" + stockShares +
                 '}';
