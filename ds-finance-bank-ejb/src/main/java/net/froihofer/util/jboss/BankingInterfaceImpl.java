@@ -176,17 +176,11 @@ public class BankingInterfaceImpl implements BankingInterface {
     }
 
     @Override
-    public void createPerson(String name, String givenname, String address, int svnr, String username, String password) {
-      //  bankService.createPerson(name, givenname, address, svnr, username, password);
-    }
-
-    @Override
-    public String createCustomer(String name, String givenname, String address, int customerNumber, String username, String password) {
+    public void createCustomer(String name, String givenname, String address, int customerNumber, String username, String password) {
         Depot depot = new Depot(customerNumber, customerNumber, new ArrayList<>());
         Customer customer = new Customer(customerNumber, name, address, givenname, customerNumber);
         bankService.depotDAO.persist(depot);
         bankService.customerDAO.persist(customer);
-        return customer.toString();
     }
 
     @Override
@@ -201,7 +195,7 @@ public class BankingInterfaceImpl implements BankingInterface {
 
 
     @Override
-    public PersonDTO searchCustomer(Integer customerNr) throws BankingInterfaceException {
+    public CustomerDTO searchCustomer(Integer customerNr) throws BankingInterfaceException {
         var customer = bankService.customerDAO.findById(customerNr);
         return new CustomerDTO(customer.getCustomerNr(), customer.getName(), customer.getGivenname(), customer.getAddresse(), customer.getBankDepotID());
     }

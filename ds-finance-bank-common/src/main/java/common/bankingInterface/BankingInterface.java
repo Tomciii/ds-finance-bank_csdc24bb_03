@@ -1,9 +1,6 @@
 package common.bankingInterface;
 
-import common.dto.DepotDTO;
-import common.dto.ListStockDTO;
-import common.dto.PersonDTO;
-import common.dto.TradeDTO;
+import common.dto.*;
 
 import javax.ejb.Remote;
 
@@ -28,14 +25,11 @@ public interface BankingInterface {
 
     DepotDTO getDepot(int customerNr) throws BankingInterfaceException;
 
-    void createPerson(String name, String givenname, String address, int svnr, String username, String password);
-
-    String createCustomer(String name, String givenname, String address, int svnr, String username, String password);
+    void createCustomer(String name, String givenname, String address, int svnr, String username, String password);
 
     void createEmployee(int snvt);
 
-    // TODO: Return Person
-    PersonDTO searchCustomer(Integer customerNr)  throws BankingInterfaceException;
+    CustomerDTO searchCustomer(Integer customerNr)  throws BankingInterfaceException;
 
     String getInvestableVolume() throws BankingInterfaceException;
 

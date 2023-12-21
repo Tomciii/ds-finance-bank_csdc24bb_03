@@ -66,8 +66,6 @@ p
 Tds-finance-bank-client/src/main/java/net/froihofer/util/WildflyJndiLookupHelper.java,9\2\92277f25e20487c02cf5412747bc1e4653b3bacd
 q
 Ads-finance-bank-common/src/main/java/common/dto/ListStockDTO.java,b\b\bbd64936761e8bd119a08d65060549ca510e8a61
-p
-@ds-finance-bank-common/src/main/java/common/dto/CustomerDTO.java,9\2\92306ac97219e236828d2f737917209a9e9579ae
 Ž
 ^ds-finance-bank-ejb/src/main/java/net/froihofer/util/jboss/persistance/mapper/StockMapper.java,7\c\7ca4397b0324176bd5b2d758ee0fc59b5a5bbe5f
 ‘

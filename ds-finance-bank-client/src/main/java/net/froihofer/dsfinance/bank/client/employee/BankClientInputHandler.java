@@ -2,6 +2,7 @@ package net.froihofer.dsfinance.bank.client.employee;
 
 import common.bankingInterface.BankingInterface;
 import common.bankingInterface.BankingInterfaceException;
+import common.dto.CustomerDTO;
 import common.dto.DepotDTO;
 import common.dto.StockDTO;
 import common.dto.TradeDTO;
@@ -27,15 +28,14 @@ class BankClientInputHandler {
         String address = CommonInputHandler.getAddress();
         Integer customerNumber = CommonInputHandler.getCustomerNumber();
 
-       String returnValue = bankingInterface.createCustomer(firstName, lastName, address, customerNumber, null, null);
-        System.out.println(returnValue);
+      bankingInterface.createCustomer(firstName, lastName, address, customerNumber, null, null);
     }
 
     public void searchCustomer() {
         Integer customerNumber = CommonInputHandler.getCustomerNumber();
 
         try {
-            String value = bankingInterface.searchCustomer(customerNumber);
+            CustomerDTO value = bankingInterface.searchCustomer(customerNumber);
             System.out.println(value);
         } catch (BankingInterfaceException e) {
             e.printStackTrace();
