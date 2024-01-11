@@ -8,10 +8,13 @@ import net.froihofer.util.RmiProxyBuilder;
 
 class BankClientInputHandler {
     private RmiProxyBuilder rmiProxyBuilder = new RmiProxyBuilder();
-    BankingInterface bankingInterface = rmiProxyBuilder.getRmiProxy("customer", "customerpass");
-
+    BankingInterface bankingInterface = null;
     void searchStockByName() {
         CommonInputHandler.searchStockByName(bankingInterface);
+    }
+
+    public void login(String username, String password){
+        bankingInterface = rmiProxyBuilder.getRmiProxy(username, password);
     }
 
     public void buyStock() {

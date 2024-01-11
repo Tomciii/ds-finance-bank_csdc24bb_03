@@ -13,12 +13,21 @@ class BankClientConsole {
     void processInput(){
         System.out.println("Welcome to the Banking Client Application for customers.");
         boolean isProcessing = true;
-        this.displayActions();
+
+        System.out.println("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
+        System.out.println("Type in your username - ie. customer");
+        String username = scanner.nextLine();
+        System.out.println("Type in your password - ie. customerpass");
+        String password = scanner.nextLine();
+
+        inputHandler.login(username, password);
+
 
         while (isProcessing) {
-         System.out.println(" ");
-         System.out.print("Input> ");
-        String input = scanner.nextLine();
+            this.displayActions();
+            System.out.println(" ");
+            System.out.print("Input> ");
+            String input = scanner.nextLine();
 
         switch (input) {
             case "1": inputHandler.searchStockByName(); break;

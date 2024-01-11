@@ -15,11 +15,15 @@ import java.util.Scanner;
 class BankClientInputHandler {
     private Scanner scanner = new Scanner(System.in);
     private RmiProxyBuilder rmiProxyBuilder = new RmiProxyBuilder();
-    BankingInterface bankingInterface = rmiProxyBuilder.getRmiProxy("customer", "customerpass");;
+    BankingInterface bankingInterface = null;
 
     // TODO Implement all the person persistance logic
     void searchStockByName() {
         CommonInputHandler.searchStockByName(bankingInterface);
+    }
+
+    public void login(String username, String password){
+        bankingInterface = rmiProxyBuilder.getRmiProxy(username, password);
     }
 
     public void addCustomer() {

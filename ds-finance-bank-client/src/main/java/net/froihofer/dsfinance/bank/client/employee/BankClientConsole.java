@@ -10,16 +10,24 @@ class BankClientConsole {
     private Scanner scanner = new Scanner(System.in);
     private BankClientInputHandler inputHandler = new BankClientInputHandler();
 
+
     void processInput(){
         System.out.println("Welcome to the Banking Client Application for employees.");
         boolean isProcessing = true;
-        this.displayActions();
 
+        System.out.println("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
+        System.out.println("Type in your username - ie. employee");
+        String username = scanner.nextLine();
+        System.out.println("Type in your password - ie. employeepass");
+        String password = scanner.nextLine();
+
+        inputHandler.login(username, password);
 
         while (isProcessing){
-        System.out.println(" ");
-        System.out.print("Input> ");
-        String input = scanner.nextLine();
+            displayActions();
+            System.out.println(" ");
+            System.out.print("Input> ");
+            String input = scanner.nextLine();
 
         switch (input) {
             case "1": inputHandler.addCustomer(); break;
