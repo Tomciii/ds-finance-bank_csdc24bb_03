@@ -280,7 +280,7 @@ public class BankingInterfaceImpl implements BankingInterface {
 
     private void callSoapClientBuyMethod(TradeDTO tradeDTO) {
         try {
-            SoapClient.buy(tradeDTO.getStockName(), (int) tradeDTO.getAmount());
+            SoapClient.buy(tradeDTO.getStockName(), (int) tradeDTO.getAmount()5);
         } catch (JAXBException | IOException e) {
             e.printStackTrace();
         }
