@@ -4,13 +4,11 @@ import common.bankingInterface.BankingInterface;
 import common.bankingInterface.BankingInterfaceException;
 import common.dto.*;
 import jakarta.xml.bind.JAXBException;
-import net.froihofer.util.jboss.persistance.entity.Bank;
-import net.froihofer.util.jboss.persistance.entity.Customer;
-import net.froihofer.util.jboss.persistance.entity.Depot;
-import net.froihofer.util.jboss.persistance.entity.Shares;
+import net.froihofer.util.jboss.persistance.entity.*;
 import net.froihofer.util.jboss.persistance.mapper.DepotMapper;
 import net.froihofer.util.jboss.persistance.mapper.StockMapper;
 import net.froihofer.util.jboss.soapclient.SoapClient;
+import net.froihofer.util.jboss.util.WildflyAuthDBHelper;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
@@ -38,6 +36,8 @@ public class BankingInterfaceImpl implements BankingInterface {
 
     private final BankService bankService = new BankService();
 
+    private final WildflyAuthDBHelper wildflyAuthDBHelper= new WildflyAuthDBHelper();
+
     public boolean login(String username, String password) throws BankingInterfaceException {
         System.out.println("TestA");
         System.out.println(username);
@@ -64,7 +64,7 @@ public class BankingInterfaceImpl implements BankingInterface {
         String username = principal.getName();
         System.out.println("Logged-in User: " + username);
         // Check if the user is in a specific role
-        if (sessionContext.isCallerInRole("employee")) {
+        if (sessionContext.isCallerInRole("employee") && bankService.employeeDAO.findByUsername(username)) {
             System.out.println("User is Employee Role");
             return true;
         } else {
@@ -79,7 +79,7 @@ public class BankingInterfaceImpl implements BankingInterface {
         String username = principal.getName();
         System.out.println("Logged-in User: " + username);
         // Check if the user is in a specific role
-        if (sessionContext.isCallerInRole("customer")) {
+        if (sessionContext.isCallerInRole("customer") && bankService.customerDAO.findByUsername(username)) {
             System.out.println("User is Customer Role");
             return true;
         } else {
@@ -175,15 +175,39 @@ public class BankingInterfaceImpl implements BankingInterface {
 
     @Override
     public void createCustomer(String name, String givenname, String address, int customerNumber, String username, String password) {
-        Depot depot = new Depot(customerNumber, customerNumber, new ArrayList<>());
-        Customer customer = new Customer(customerNumber, name, address, givenname, customerNumber);
-        bankService.depotDAO.persist(depot);
-        bankService.customerDAO.persist(customer);
+        try{
+            if(isEmployee()==true){
+                Depot depot = new Depot(customerNumber, customerNumber, new ArrayList<>());
+                Customer customer = new Customer(customerNumber, name, address, givenname, customerNumber, username, password);
+                bankService.depotDAO.persist(depot);
+                bankService.customerDAO.persist(customer);
+                try {
+                    wildflyAuthDBHelper.addUser(username, password, new String[]{"customer"});
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
-    @Override
-    public void createEmployee(int svnr) {
 
+    @Override
+    public void createEmployee(int manr, String name, String givenname, String address, String username, String password) {
+        try{
+            if(isEmployee()==true){
+                Employee employee = new Employee(manr,name,givenname, address, username, password);
+                bankService.employeeDAO.persist(employee);
+                try {
+                    wildflyAuthDBHelper.addUser(username, password, new String[]{"employee"});
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     @Override
@@ -195,12 +219,20 @@ public class BankingInterfaceImpl implements BankingInterface {
     @Override
     public CustomerDTO searchCustomer(Integer customerNr) throws BankingInterfaceException {
         var customer = bankService.customerDAO.findById(customerNr);
-        return new CustomerDTO(customer.getCustomerNr(), customer.getName(), customer.getGivenname(), customer.getAddresse(), customer.getBankDepotID());
+        return new CustomerDTO(customer.getCustomerNr(), customer.getName(), customer.getGivenname(), customer.getAddresse(), customer.getBankDepotID(), customer.getUsername(), customer.getPassword() );
     }
 
     @Override
     public String getInvestableVolume() throws BankingInterfaceException {
-        return bankService.bankDAO.findById(1).getInvestableVolume().toString();
+
+        try{
+            return bankService.bankDAO.findById(1).getInvestableVolume().toString();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+        return null;
+
     }
 
     @Override

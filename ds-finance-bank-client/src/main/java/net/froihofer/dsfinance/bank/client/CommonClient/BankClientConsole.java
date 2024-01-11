@@ -47,7 +47,7 @@ class BankClientConsole {
                 }
             }
         }else{
-
+            if(inputHandler.getRole()=="customer"){
             while (isProcessing) {
                 this.displayActionsCustomer();
                 System.out.println(" ");
@@ -63,6 +63,8 @@ class BankClientConsole {
                     case "EXIT": isProcessing = false; break;
                     default: break;
                 }
+            }}else{
+                System.out.println("Username not in DB");
             }
         }
 

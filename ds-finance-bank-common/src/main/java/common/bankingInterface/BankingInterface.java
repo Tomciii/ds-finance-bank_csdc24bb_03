@@ -27,7 +27,7 @@ public interface BankingInterface {
 
     void createCustomer(String name, String givenname, String address, int svnr, String username, String password);
 
-    void createEmployee(int snvt);
+    void createEmployee(int manr, String name, String givenname, String address, String username, String password);
 
     CustomerDTO searchCustomer(Integer customerNr)  throws BankingInterfaceException;
 

@@ -32,8 +32,9 @@ class BankClientInputHandler {
         String lastName = CommonInputHandler.getLastName();
         String address = CommonInputHandler.getAddress();
         Integer customerNumber = CommonInputHandler.getCustomerNumber();
-
-      bankingInterface.createCustomer(firstName, lastName, address, customerNumber, null, null);
+        String username = CommonInputHandler.getUsername();
+        String password = CommonInputHandler.getPassword();
+        bankingInterface.createCustomer(firstName, lastName, address, customerNumber, username, password);
     }
 
     public void searchCustomer() {

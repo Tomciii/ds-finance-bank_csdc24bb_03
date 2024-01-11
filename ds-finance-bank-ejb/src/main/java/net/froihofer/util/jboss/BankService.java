@@ -5,6 +5,7 @@ import net.froihofer.util.jboss.persistance.dao.*;
 import net.froihofer.util.jboss.persistance.entity.Bank;
 import net.froihofer.util.jboss.persistance.entity.Customer;
 import net.froihofer.util.jboss.persistance.entity.Depot;
+import net.froihofer.util.jboss.persistance.entity.Employee;
 import net.froihofer.util.jboss.persistance.mapper.CustomerMapper;
 import net.froihofer.util.jboss.persistance.mapper.DepotMapper;
 import net.froihofer.util.jboss.persistance.mapper.EmployeeMapper;
@@ -56,7 +57,8 @@ public class BankService {
         bankDAO = new BankDAO();
 
         depotDAO.persist(new Depot(1,1,new ArrayList<>()));
-        customerDAO.persist(new Customer(1,"test","test","test",1));
+        customerDAO.persist(new Customer(1,"test","test","test",1, "customer", "customerpass"));
+        employeeDAO.persist(new Employee(1, "Employee", "givenname", "address","employee", "employeepass"));
         bankDAO.persist(new Bank(1, "TestBank", 100_000.0));
     }
 

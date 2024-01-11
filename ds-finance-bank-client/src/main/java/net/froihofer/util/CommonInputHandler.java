@@ -42,6 +42,8 @@ public class CommonInputHandler {
         return stock;
     }
 
+
+
     public static String getCustomerID() {
         String stock = "";
         while (stock.isEmpty()){
@@ -62,6 +64,26 @@ public class CommonInputHandler {
         return stock;
     }
 
+    public static String getUsername() {
+        String stock = "";
+        while (stock.isEmpty()){
+            System.out.print("Type username> ");
+            stock = scanner.nextLine();
+        }
+
+        return stock;
+    }
+
+    public static String getPassword() {
+        String stock = "";
+        while (stock.isEmpty()){
+            System.out.print("Type password> ");
+            stock = scanner.nextLine();
+        }
+
+        return stock;
+    }
+
 
     public static String getLastName() {
         String stock = "";
@@ -73,15 +95,6 @@ public class CommonInputHandler {
         return stock;
     }
 
-    public static String getPassword() {
-        String stock = "";
-        while (stock.isEmpty()){
-            System.out.print("Type in password> ");
-            stock = scanner.nextLine();
-        }
-
-        return stock;
-    }
 
     public static void printDepotInfo(int customerNr, BankingInterface bankingInterface) {
         try {

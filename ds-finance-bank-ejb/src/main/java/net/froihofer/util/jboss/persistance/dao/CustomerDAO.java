@@ -1,12 +1,10 @@
 package net.froihofer.util.jboss.persistance.dao;
 
 import net.froihofer.util.jboss.persistance.entity.Customer;
+import net.froihofer.util.jboss.persistance.entity.Employee;
 import net.froihofer.util.jboss.persistance.entity.Shares;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 
 public class CustomerDAO {
     @PersistenceContext(unitName = "ds-finance-bank-depotunit")
@@ -20,6 +18,14 @@ public class CustomerDAO {
 
     public Customer findById(int id) {
         return entityManager.find(Customer.class, id);
+    }
+
+    public boolean findByUsername(String username){
+        String jpql = "SELECT s FROM Customer s WHERE s.username = :username";
+        TypedQuery<Customer> query = entityManager.createQuery(jpql, Customer.class);
+        query.setParameter("username", username);
+        //System.out.println(query.getResultList());
+        return !query.getResultList().isEmpty();
     }
 
     public void persist(Customer customer) {

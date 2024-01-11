@@ -25,6 +25,12 @@ public class Customer implements Serializable {
     @Column(name = "BANKDEPOTID")
     private int bankDepotID;
 
+    @Column(name = "USERNAME", unique = true)
+    private String username;
+
+    @Column(name = "PASSWORD")
+    private String password;
+
     public Customer(int customernr, String name, String givenname, String addresse, int bankDepotID) {
         this.customernr = customernr;
         this.name = name;
@@ -33,8 +39,34 @@ public class Customer implements Serializable {
         this.bankDepotID = bankDepotID;
     }
 
+    public Customer(int customernr, String name, String givenname, String addresse, int bankDepotID, String username, String password) {
+        this.customernr = customernr;
+        this.givenname = givenname;
+        this.name = name;
+        this.addresse = addresse;
+        this.bankDepotID = bankDepotID;
+        this.username = username;
+        this.password = password;
+    }
+
     public Customer() {
 
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getBankDepotID() {
