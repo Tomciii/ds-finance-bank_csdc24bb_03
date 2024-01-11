@@ -149,4 +149,25 @@ public class CommonInputHandler {
             e.printStackTrace();
         }
     }
+
+    public static String getRole(BankingInterface bankingInterface) {
+        try {
+            if (bankingInterface.isCustomer() == true) {
+                return "customer";
+            } else {
+                if (bankingInterface.isEmployee() == true) {
+                    return "employee";
+                } else {
+                    return "other role";
+                }
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        catch (BankingInterfaceException e) {
+            e.printStackTrace();
+        }
+
+        return "Error occured";
+    }
 }

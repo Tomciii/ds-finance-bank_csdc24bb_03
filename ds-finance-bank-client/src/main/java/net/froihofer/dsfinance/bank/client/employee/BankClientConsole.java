@@ -1,5 +1,6 @@
 package net.froihofer.dsfinance.bank.client.employee;
 
+import common.bankingInterface.BankingInterfaceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +12,7 @@ class BankClientConsole {
     private BankClientInputHandler inputHandler = new BankClientInputHandler();
 
 
-    void processInput(){
+    void processInput() throws BankingInterfaceException {
         System.out.println("Welcome to the Banking Client Application for employees.");
         boolean isProcessing = true;
 
@@ -22,6 +23,8 @@ class BankClientConsole {
         String password = scanner.nextLine();
 
         inputHandler.login(username, password);
+
+        System.out.println("Your role: "+inputHandler.getRole());
 
         while (isProcessing){
             displayActions();

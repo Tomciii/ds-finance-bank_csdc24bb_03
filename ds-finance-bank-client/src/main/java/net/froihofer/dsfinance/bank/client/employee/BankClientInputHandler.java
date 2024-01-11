@@ -22,6 +22,10 @@ class BankClientInputHandler {
         CommonInputHandler.searchStockByName(bankingInterface);
     }
 
+    String getRole() {
+        return CommonInputHandler.getRole(bankingInterface);
+    }
+
     public void login(String username, String password){
         bankingInterface = rmiProxyBuilder.getRmiProxy(username, password);
     }
