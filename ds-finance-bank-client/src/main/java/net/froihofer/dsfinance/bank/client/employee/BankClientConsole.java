@@ -24,7 +24,7 @@ class BankClientConsole {
 
         inputHandler.login(username, password);
 
-        System.out.println("Your role: "+inputHandler.getRole());
+        System.out.println("INFO: Your role: "+inputHandler.getRole());
 
         while (isProcessing){
             displayActions();
