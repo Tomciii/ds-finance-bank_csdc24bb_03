@@ -29,4 +29,17 @@ public class ListStockDTO implements Serializable {
                 "list=" + list +
                 '}';
     }
+
+    public String cleanString(){
+        StringBuilder returnvalue = new StringBuilder();
+
+        for (StockDTO stock : list) {
+            returnvalue.append("_____________________");
+            returnvalue.append(stock.cleanString());
+            returnvalue.append("_____________________");
+            returnvalue.append(System.lineSeparator());
+        }
+
+        return returnvalue.toString();
+    }
 }

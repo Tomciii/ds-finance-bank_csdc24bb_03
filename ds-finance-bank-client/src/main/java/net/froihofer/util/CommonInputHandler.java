@@ -141,7 +141,7 @@ public class CommonInputHandler {
             System.out.println("Searching for stock " + stock + "...");
             ListStockDTO result = bankingInterface.searchStockByName(stock);
             System.out.println("Results for stock " + stock +":" );
-            System.out.println(result);
+            System.out.println(result.cleanString());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }

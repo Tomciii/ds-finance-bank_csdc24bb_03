@@ -34,4 +34,15 @@ public class StockDTO implements Serializable {
                 ", symbol='" + symbol + '\'' +
                 '}';
     }
+
+    public String cleanString(){
+        return
+                System.lineSeparator() + "companyName= " + companyName + System.lineSeparator() +
+                "floatShares= " + floatShares + System.lineSeparator() +
+                "lastTradePrice= " + lastTradePrice +System.lineSeparator() +
+                "lastTradeTime= " + lastTradeTime +System.lineSeparator() +
+                "marketCapitalization= " + marketCapitalization +System.lineSeparator() +
+                "stockExchange= " + stockExchange +System.lineSeparator() +
+                "symbol= " + symbol + System.lineSeparator();
+    }
 }
