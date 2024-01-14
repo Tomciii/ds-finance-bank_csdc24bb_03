@@ -33,4 +33,32 @@ public class DepotMapper {
 
         return depotDTO;
     }
+
+    public DepotDTO toDepotDTOwithPrice(Depot depot, ArrayList<Double> stockValues) {
+
+        if (depot == null) {
+            return null;
+        }
+
+        DepotDTO depotDTO = new DepotDTO();
+
+        depotDTO.setId(depot.getId());
+
+        List<SharesDTO> sharesDTOS = new ArrayList<>();
+
+        double depotVolume = 0;
+
+        for(int i=0; i<stockValues.size(); i++){
+            sharesDTOS.add(sharesMapper.toStockDTOWithPrice(depot.getShares().get(i), depot.getShares().get(i).getStockShares()*stockValues.get(i)));
+
+            depotVolume+=depot.getShares().get(i).getStockShares()*stockValues.get(i);
+
+        }
+
+        depotDTO.setShares(sharesDTOS);
+        depotDTO.setDepotVolume(depotVolume);
+
+        return depotDTO;
+    }
+
 }

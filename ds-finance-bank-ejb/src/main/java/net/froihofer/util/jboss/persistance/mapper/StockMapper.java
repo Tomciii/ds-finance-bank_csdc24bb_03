@@ -60,4 +60,18 @@ public class StockMapper {
 
         return new ListStockDTO(stockDTOList);
     }
+
+    public double getPrice(FindStockQuotesByCompanyNameResponse input){
+        if (input == null) {
+            return 0;
+        }
+
+        for (var stock : input.getReturn()) {
+            if (stock != null){
+                return stock.getLastTradePrice().doubleValue();
+            }
+        }
+
+        return 0;
+    }
 }

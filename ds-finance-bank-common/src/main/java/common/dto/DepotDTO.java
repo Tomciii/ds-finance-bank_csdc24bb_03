@@ -11,6 +11,9 @@ public class DepotDTO implements Serializable {
 
     private List<SharesDTO> shares = new ArrayList<>();
 
+    public double depotVolume;
+
+
     public int getId() {
         return id;
     }
@@ -36,10 +39,19 @@ public class DepotDTO implements Serializable {
 
     }
 
+
+    public void setDepotVolume(double depotVolume) {
+        this.depotVolume = depotVolume;
+    }
+
+    public double getDepotVolume() {
+        return depotVolume;
+    }
+
     @Override
     public String toString() {
-        return "DepotDTO{" +
-                " shares=" + shares +
-                '}';
+        return "Depot Details:" + System.lineSeparator()
+                + shares;
     }
+
 }

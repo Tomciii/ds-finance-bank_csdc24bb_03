@@ -100,6 +100,7 @@ public class CommonInputHandler {
         try {
             System.out.println("Loading Depot Info: ");
             DepotDTO depotDTO = bankingInterface.getDepot(customerNr);
+            System.out.println("Volume of depot"+ depotDTO.getDepotVolume());
             System.out.println(depotDTO);
         } catch (BankingInterfaceException e) {
             e.printStackTrace();

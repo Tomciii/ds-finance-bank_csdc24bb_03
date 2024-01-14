@@ -51,7 +51,8 @@ class BankClientInputHandler {
     public void buyStockForCustomer() {
         System.out.println("Buying Stock: ");
         String customerID = CommonInputHandler.getCustomerID();
-        String stockName = CommonInputHandler.getStockSymbol();
+        System.out.println("You should enter the full legal companyname i.e. Apple Inc: ");
+        String stockName = CommonInputHandler.getStockName();
         Double amount = CommonInputHandler.getAmount();
 
         try {
@@ -64,6 +65,7 @@ class BankClientInputHandler {
     public void sellStockForCustomer() {
         System.out.println("Selling Stock: ");
         String customerID = CommonInputHandler.getCustomerID();
+        System.out.println("You should enter the symbol i.e. AAPL ");
         String stockName = CommonInputHandler.getStockSymbol();
         Double amount = CommonInputHandler.getAmount();
 
@@ -93,7 +95,8 @@ class BankClientInputHandler {
 
     public void buyStock() {
         System.out.println("Buying Stock: ");
-        String stock = CommonInputHandler.getStockSymbol();
+        System.out.println("You should enter the full legal companyname i.e. Apple Inc: ");
+        String stock = CommonInputHandler.getStockName();
         Double amount = CommonInputHandler.getAmount();
 
         try {
@@ -105,6 +108,7 @@ class BankClientInputHandler {
 
     public void sellStock() {
         System.out.println("Selling Stock: ");
+        System.out.println("You should enter the symbol i.e. AAPL ");
         String stock = CommonInputHandler.getStockSymbol();
         Double amount = CommonInputHandler.getAmount();
 

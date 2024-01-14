@@ -8,6 +8,7 @@ import net.froihofer.util.jboss.persistance.entity.*;
 import net.froihofer.util.jboss.persistance.mapper.DepotMapper;
 import net.froihofer.util.jboss.persistance.mapper.StockMapper;
 import net.froihofer.util.jboss.soapclient.SoapClient;
+import net.froihofer.util.jboss.soapclient.model.FindStockQuotesByCompanyNameResponse;
 import net.froihofer.util.jboss.util.WildflyAuthDBHelper;
 
 import javax.annotation.Resource;
@@ -107,6 +108,27 @@ public class BankingInterfaceImpl implements BankingInterface {
         }
     }
 
+    public double getStockValue(String symbol) throws BankingInterfaceException{
+        System.out.println(symbol);
+        try {
+            FindStockQuotesByCompanyNameResponse response = bankService.getFindStockQuotesByCompanyNameResponse(symbol);
+
+            String fullcompanyName = null;
+
+            for (var stock : response.getReturn()) {
+                if (stock != null){
+                   if(stock.getCompanyName().equals(symbol)){
+                       fullcompanyName = stock.getCompanyName();
+                   }
+                }
+            }
+
+            return stockMapper.getPrice(bankService.getFindStockQuotesByCompanyNameResponse(fullcompanyName));
+        } catch (JAXBException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void buySockByISIN(TradeDTO tradeDTO) throws BankingInterfaceException {
 
@@ -121,16 +143,55 @@ public class BankingInterfaceImpl implements BankingInterface {
             return; // throw NoDepotExistantException or NullPointer
         }
 
-        List<Shares> shares = bankService.stockDAO.findByStockName(tradeDTO.getStockName());
-        if (shares == null || shares.isEmpty()) {
-            buyNewShare(depot, tradeDTO);
-            bankService.depotDAO.merge(depot);
-            removeFromInvestableVolume(bank, tradeDTO);
+        FindStockQuotesByCompanyNameResponse response = null;
 
-            callSoapClientBuyMethod(tradeDTO);
-
-            return;
+        try{
+            System.out.println(tradeDTO.getStockName().toString());
+            response = bankService.getFindStockQuotesByCompanyNameResponse(tradeDTO.getStockName());
+            System.out.println("Got Stock Info");
+        }catch(Exception e){
+            System.out.println(e.toString());
         }
+
+        System.out.println(response.toString());
+
+        String symbol = null;
+        String fullcompanyName = null;
+
+
+        for (var stock : response.getReturn()) {
+            if (stock != null){
+                if(stock.getCompanyName().equals(tradeDTO.getStockName())){
+                    fullcompanyName = stock.getCompanyName();
+                    symbol = stock.getSymbol();
+                }
+            }
+        }
+
+        System.out.println("tradeDTO.getStockName()");
+        System.out.println(tradeDTO.getStockName());
+        System.out.println("Symbol");
+        System.out.println(symbol);
+        tradeDTO.setStockName(symbol);
+        System.out.println("tradeDTO.getStockName()");
+        System.out.println(tradeDTO.getStockName());
+
+
+        if(symbol!=null){
+            List<Shares> shares = bankService.stockDAO.findByStockName(tradeDTO.getStockName());
+            if (shares == null || shares.isEmpty()) {
+                System.out.println("ifffff");
+                tradeDTO.setStockName(fullcompanyName);
+                buyNewShare(depot, tradeDTO);
+                System.out.println("merge depot");
+                bankService.depotDAO.merge(depot);
+                tradeDTO.setStockName(fullcompanyName);
+                removeFromInvestableVolume(bank, tradeDTO);
+                System.out.println("ifffff");
+                tradeDTO.setStockName(symbol);
+                callSoapClientBuyMethod(tradeDTO);
+                return;
+            }
 
             Shares existingSharesEntry = findExistingShare(tradeDTO, shares);
 
@@ -140,10 +201,16 @@ public class BankingInterfaceImpl implements BankingInterface {
                 buyNewShare(depot, tradeDTO);
             }
 
-        callSoapClientBuyMethod(tradeDTO);
+            callSoapClientBuyMethod(tradeDTO);
 
-        removeFromInvestableVolume(bank, tradeDTO);
+
+            tradeDTO.setStockName(fullcompanyName);
+            removeFromInvestableVolume(bank, tradeDTO);
+
+            tradeDTO.setStockName(symbol);
             bankService.depotDAO.merge(depot);
+        }
+
     }
 
     @Override
@@ -168,9 +235,10 @@ public class BankingInterfaceImpl implements BankingInterface {
         depot.getShares().add(existingSharesEntry);
         bankService.depotDAO.merge(depot);
 
-        addToInvestableVolume(bank, tradeDTO);
-
         callSoapClientSellMethod(tradeDTO);
+
+        tradeDTO.setStockName(existingSharesEntry.getstockname_realName());
+        addToInvestableVolume(bank, tradeDTO);
     }
 
     @Override
@@ -212,7 +280,18 @@ public class BankingInterfaceImpl implements BankingInterface {
 
     @Override
     public DepotDTO getDepot(int customerNr) throws BankingInterfaceException {
-        return depotMapper.toDepotDTO(bankService.depotDAO.findById(customerNr));
+        System.out.println("getDepot");
+        Depot depot = bankService.depotDAO.findById(customerNr);
+        System.out.println("stockvalues");
+        ArrayList<Double> stockValues = new ArrayList<Double>();
+        System.out.println(depot.toString());
+        for(int i=0; i<depot.getShares().size(); i++){
+            System.out.println(depot.getShares().get(i).getstockname_realName());
+            stockValues.add(getStockValue(depot.getShares().get(i).getstockname_realName()));
+            System.out.print("Got Values");
+        }
+        System.out.println(stockValues.toString());
+        return depotMapper.toDepotDTOwithPrice(bankService.depotDAO.findById(customerNr),stockValues);
     }
 
 
@@ -241,14 +320,40 @@ public class BankingInterfaceImpl implements BankingInterface {
     }
 
     private void buyNewShare(Depot depot, TradeDTO tradeDTO) {
-        Shares share = new Shares(depot, tradeDTO.getStockName(), tradeDTO.getAmount());
-        bankService.stockDAO.persist(share);
+        System.out.println("buyNewShare");
 
-        if (depot.getShares() == null) {
-            depot.setShares(new ArrayList<>());
+        FindStockQuotesByCompanyNameResponse response = null;
+        try{
+            System.out.println(tradeDTO.getStockName().toString());
+            response = bankService.getFindStockQuotesByCompanyNameResponse(tradeDTO.getStockName());
+        }catch(Exception e){
+            System.out.println(e.toString());
         }
 
-        depot.getShares().add(share);
+        System.out.println(response.toString());
+
+        String symbol = null;
+        String fullcompanyName = null;
+
+        for (var stock : response.getReturn()) {
+            if (stock != null){
+                if(stock.getCompanyName().equals(tradeDTO.getStockName())){
+                    fullcompanyName = stock.getCompanyName();
+                    symbol = stock.getSymbol();
+                }
+            }
+        }
+
+        if( symbol != null && fullcompanyName!= null){
+            Shares share = new Shares(depot, symbol, tradeDTO.getAmount(), fullcompanyName);
+            bankService.stockDAO.persist(share);
+
+            if (depot.getShares() == null) {
+                depot.setShares(new ArrayList<>());
+            }
+
+            depot.getShares().add(share);
+        }
     }
 
     private void buyMoreOfExistingShare(TradeDTO tradeDTO, Depot depot, Shares existingSharesEntry) {
@@ -266,7 +371,11 @@ public class BankingInterfaceImpl implements BankingInterface {
     }
 
     private void removeFromInvestableVolume(Bank bank, TradeDTO tradeDTO) {
-        bank.setInvestableVolume(bank.getInvestableVolume() - tradeDTO.getAmount());
+        try{
+            bank.setInvestableVolume(bank.getInvestableVolume() - tradeDTO.getAmount()*getStockValue(tradeDTO.getStockName()));
+        }catch (Exception e){
+            System.out.println(e);
+        }
         bankService.bankDAO.persist(bank);
     }
 
@@ -280,14 +389,18 @@ public class BankingInterfaceImpl implements BankingInterface {
 
     private void callSoapClientBuyMethod(TradeDTO tradeDTO) {
         try {
-            SoapClient.buy(tradeDTO.getStockName(), (int) tradeDTO.getAmount()5);
+            SoapClient.buy(tradeDTO.getStockName(), (int) tradeDTO.getAmount());
         } catch (JAXBException | IOException e) {
             e.printStackTrace();
         }
     }
 
     private void addToInvestableVolume(Bank bank, TradeDTO tradeDTO) {
-        bank.setInvestableVolume(bank.getInvestableVolume() + tradeDTO.getAmount());
+        try{
+            bank.setInvestableVolume(bank.getInvestableVolume() + tradeDTO.getAmount()*getStockValue(tradeDTO.getStockName()));
+        }catch(Exception e){
+            System.out.println(e);
+        }
         bankService.bankDAO.persist(bank);
     }
 }

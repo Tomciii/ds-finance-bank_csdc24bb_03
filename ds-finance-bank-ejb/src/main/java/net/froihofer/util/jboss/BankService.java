@@ -69,4 +69,6 @@ public class BankService {
     public FindStockQuotesByIsinResponse getFindStockQuotesByIsinResponse(String isin) throws JAXBException, IOException{
         return SoapClient.findStockQuotesByIsin(isin);
     }
+
+
 }

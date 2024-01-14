@@ -21,11 +21,22 @@ public class Shares implements Serializable {
     @Column(name="STOCKSHARES")
     private double stockShares;
 
+    @Column(name="STOCKNAME_RealName")
+    private String stockname_realName;
+
     public Shares( Depot depot, String stockName, double stockShares) {
 
         this.depot = depot;
         this.stockName = stockName;
         this.stockShares = stockShares;
+    }
+
+
+    public Shares(Depot depot, String stockName, double stockShares, String stockname_realName) {
+        this.depot = depot;
+        this.stockName = stockName;
+        this.stockShares = stockShares;
+        this.stockname_realName = stockname_realName;
     }
 
     public Shares() {
@@ -63,6 +74,14 @@ public class Shares implements Serializable {
 
     public void setStockShares(double stockShares) {
         this.stockShares = stockShares;
+    }
+
+    public String getstockname_realName() {
+        return stockname_realName;
+    }
+
+    public void getstockname_realName(String stockname_realName) {
+        this.stockname_realName = stockname_realName;
     }
 
     @Override

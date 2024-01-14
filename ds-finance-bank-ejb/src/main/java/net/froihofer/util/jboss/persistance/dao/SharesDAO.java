@@ -24,6 +24,13 @@ public class SharesDAO {
         return query.getResultList();
     }
 
+    public List<Shares> findByStockName_realName(String stockName) {
+        String jpql = "SELECT s FROM Shares s WHERE s.stockname_realName = :stockName";
+        TypedQuery<Shares> query = entityManager.createQuery(jpql, Shares.class);
+        query.setParameter("stockName", stockName);
+        return query.getResultList();
+    }
+
     public Shares findById(String id) {
         return entityManager.find(Shares.class, id);
     }

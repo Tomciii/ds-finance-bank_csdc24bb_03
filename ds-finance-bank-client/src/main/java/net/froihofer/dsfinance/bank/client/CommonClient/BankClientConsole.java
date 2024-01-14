@@ -17,9 +17,9 @@ class BankClientConsole {
         boolean isProcessing = true;
 
         System.out.println("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-");
-        System.out.println("Type in your username - ie. employee");
+        System.out.println("Type in your username - ie. employee // customer // username (for user not in Bank db, but in Serverdb)");
         String username = scanner.nextLine();
-        System.out.println("Type in your password - ie. employeepass");
+        System.out.println("Type in your password - ie. employeepass //customerpass // password");
         String password = scanner.nextLine();
 
         inputHandler.login(username, password);
