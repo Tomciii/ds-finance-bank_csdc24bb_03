@@ -132,113 +132,122 @@ public class BankingInterfaceImpl implements BankingInterface {
     @Override
     public void buySockByISIN(TradeDTO tradeDTO) throws BankingInterfaceException {
 
-        Bank bank = bankService.bankDAO.findById(1);
-
-        if (bank == null || bank.getInvestableVolume() < tradeDTO.getAmount()) {
-            return; // throw new InvalidArgumentException or something
-        }
-
-        Depot depot = bankService.depotDAO.findById(Integer.valueOf(tradeDTO.getCustomerID()));
-        if (depot == null) {
-            return; // throw NoDepotExistantException or NullPointer
-        }
-
-        FindStockQuotesByCompanyNameResponse response = null;
-
         try{
-            System.out.println(tradeDTO.getStockName().toString());
-            response = bankService.getFindStockQuotesByCompanyNameResponse(tradeDTO.getStockName());
-            System.out.println("Got Stock Info");
-        }catch(Exception e){
-            System.out.println(e.toString());
-        }
+            Bank bank = bankService.bankDAO.findById(1);
 
-        System.out.println(response.toString());
+            if (bank == null || bank.getInvestableVolume() < tradeDTO.getAmount()) {
+                return; // throw new InvalidArgumentException or something
+            }
 
-        String symbol = null;
-        String fullcompanyName = null;
+            Depot depot = bankService.depotDAO.findById(Integer.valueOf(tradeDTO.getCustomerID()));
+            if (depot == null) {
+                return; // throw NoDepotExistantException or NullPointer
+            }
+
+            FindStockQuotesByCompanyNameResponse response = null;
+
+            try{
+                System.out.println(tradeDTO.getStockName().toString());
+                response = bankService.getFindStockQuotesByCompanyNameResponse(tradeDTO.getStockName());
+                System.out.println("Got Stock Info");
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
+
+            System.out.println(response.toString());
+
+            String symbol = null;
+            String fullcompanyName = null;
 
 
-        for (var stock : response.getReturn()) {
-            if (stock != null){
-                if(stock.getCompanyName().equals(tradeDTO.getStockName())){
-                    fullcompanyName = stock.getCompanyName();
-                    symbol = stock.getSymbol();
+            for (var stock : response.getReturn()) {
+                if (stock != null){
+                    if(stock.getCompanyName().equals(tradeDTO.getStockName())){
+                        fullcompanyName = stock.getCompanyName();
+                        symbol = stock.getSymbol();
+                    }
                 }
             }
-        }
 
-        System.out.println("tradeDTO.getStockName()");
-        System.out.println(tradeDTO.getStockName());
-        System.out.println("Symbol");
-        System.out.println(symbol);
-        tradeDTO.setStockName(symbol);
-        System.out.println("tradeDTO.getStockName()");
-        System.out.println(tradeDTO.getStockName());
+            System.out.println("tradeDTO.getStockName()");
+            System.out.println(tradeDTO.getStockName());
+            System.out.println("Symbol");
+            System.out.println(symbol);
+            tradeDTO.setStockName(symbol);
+            System.out.println("tradeDTO.getStockName()");
+            System.out.println(tradeDTO.getStockName());
 
 
-        if(symbol!=null){
-            List<Shares> shares = bankService.stockDAO.findByStockName(tradeDTO.getStockName());
-            if (shares == null || shares.isEmpty()) {
-                System.out.println("ifffff");
-                tradeDTO.setStockName(fullcompanyName);
-                buyNewShare(depot, tradeDTO);
-                System.out.println("merge depot");
-                bankService.depotDAO.merge(depot);
+            if(symbol!=null){
+                List<Shares> shares = bankService.stockDAO.findByStockName(tradeDTO.getStockName());
+                if (shares == null || shares.isEmpty()) {
+                    System.out.println("ifffff");
+                    tradeDTO.setStockName(fullcompanyName);
+                    buyNewShare(depot, tradeDTO);
+                    System.out.println("merge depot");
+                    bankService.depotDAO.merge(depot);
+                    tradeDTO.setStockName(fullcompanyName);
+                    removeFromInvestableVolume(bank, tradeDTO);
+                    System.out.println("ifffff");
+                    tradeDTO.setStockName(symbol);
+                    callSoapClientBuyMethod(tradeDTO);
+                    return;
+                }
+
+                Shares existingSharesEntry = findExistingShare(tradeDTO, shares);
+
+                if (existingSharesEntry != null) {
+                    buyMoreOfExistingShare(tradeDTO, depot, existingSharesEntry);
+                } else {
+                    buyNewShare(depot, tradeDTO);
+                }
+
+                callSoapClientBuyMethod(tradeDTO);
+
+
                 tradeDTO.setStockName(fullcompanyName);
                 removeFromInvestableVolume(bank, tradeDTO);
-                System.out.println("ifffff");
+
                 tradeDTO.setStockName(symbol);
-                callSoapClientBuyMethod(tradeDTO);
-                return;
+                bankService.depotDAO.merge(depot);
             }
-
-            Shares existingSharesEntry = findExistingShare(tradeDTO, shares);
-
-            if (existingSharesEntry != null) {
-                buyMoreOfExistingShare(tradeDTO, depot, existingSharesEntry);
-            } else {
-                buyNewShare(depot, tradeDTO);
-            }
-
-            callSoapClientBuyMethod(tradeDTO);
-
-
-            tradeDTO.setStockName(fullcompanyName);
-            removeFromInvestableVolume(bank, tradeDTO);
-
-            tradeDTO.setStockName(symbol);
-            bankService.depotDAO.merge(depot);
+        }catch(Exception e){
+            System.out.println(e);
         }
 
     }
 
     @Override
     public void sellStockByISIN(TradeDTO tradeDTO) throws BankingInterfaceException {
-        Depot depot = bankService.depotDAO.findById(Integer.valueOf(tradeDTO.getCustomerID()));
-        Bank bank = bankService.bankDAO.findById(1);
+        try{
 
-        if (depot == null || depot.getShares() == null || depot.getShares().isEmpty()) {
-            return; // throw NoDepotExistantException or NullPointer
+            Depot depot = bankService.depotDAO.findById(Integer.valueOf(tradeDTO.getCustomerID()));
+            Bank bank = bankService.bankDAO.findById(1);
+
+            if (depot == null || depot.getShares() == null || depot.getShares().isEmpty()) {
+                return; // throw NoDepotExistantException or NullPointer
+            }
+
+            List<Shares> shares = bankService.stockDAO.findByStockName(tradeDTO.getStockName());
+            Shares existingSharesEntry = findExistingShare(tradeDTO, shares);
+
+            if (existingSharesEntry == null) {
+                return;
+            }
+
+            existingSharesEntry.setStockShares(existingSharesEntry.getStockShares() - tradeDTO.getAmount()); // Throw "InvalidArgumentException" if negative number in total
+            bankService.stockDAO.merge(existingSharesEntry);
+            depot.getShares().removeIf(share -> tradeDTO.getStockName().equals(share.getStockName()));
+            depot.getShares().add(existingSharesEntry);
+            bankService.depotDAO.merge(depot);
+
+            callSoapClientSellMethod(tradeDTO);
+
+            tradeDTO.setStockName(existingSharesEntry.getstockname_realName());
+            addToInvestableVolume(bank, tradeDTO);
+        }catch(Exception e){
+            System.out.println(e);
         }
-
-        List<Shares> shares = bankService.stockDAO.findByStockName(tradeDTO.getStockName());
-        Shares existingSharesEntry = findExistingShare(tradeDTO, shares);
-
-        if (existingSharesEntry == null) {
-            return;
-        }
-
-        existingSharesEntry.setStockShares(existingSharesEntry.getStockShares() - tradeDTO.getAmount()); // Throw "InvalidArgumentException" if negative number in total
-        bankService.stockDAO.merge(existingSharesEntry);
-        depot.getShares().removeIf(share -> tradeDTO.getStockName().equals(share.getStockName()));
-        depot.getShares().add(existingSharesEntry);
-        bankService.depotDAO.merge(depot);
-
-        callSoapClientSellMethod(tradeDTO);
-
-        tradeDTO.setStockName(existingSharesEntry.getstockname_realName());
-        addToInvestableVolume(bank, tradeDTO);
     }
 
     @Override
@@ -280,18 +289,23 @@ public class BankingInterfaceImpl implements BankingInterface {
 
     @Override
     public DepotDTO getDepot(int customerNr) throws BankingInterfaceException {
-        System.out.println("getDepot");
-        Depot depot = bankService.depotDAO.findById(customerNr);
-        System.out.println("stockvalues");
-        ArrayList<Double> stockValues = new ArrayList<Double>();
-        System.out.println(depot.toString());
-        for(int i=0; i<depot.getShares().size(); i++){
-            System.out.println(depot.getShares().get(i).getstockname_realName());
-            stockValues.add(getStockValue(depot.getShares().get(i).getstockname_realName()));
-            System.out.print("Got Values");
+        try{
+            System.out.println("getDepot");
+            Depot depot = bankService.depotDAO.findById(customerNr);
+            System.out.println("stockvalues");
+            ArrayList<Double> stockValues = new ArrayList<Double>();
+            System.out.println(depot.toString());
+            for(int i=0; i<depot.getShares().size(); i++){
+                System.out.println(depot.getShares().get(i).getstockname_realName());
+                stockValues.add(getStockValue(depot.getShares().get(i).getstockname_realName()));
+                System.out.print("Got Values");
+            }
+            System.out.println(stockValues.toString());
+            return depotMapper.toDepotDTOwithPrice(bankService.depotDAO.findById(customerNr),stockValues);
+        }catch(Exception e){
+            System.out.println(e);
         }
-        System.out.println(stockValues.toString());
-        return depotMapper.toDepotDTOwithPrice(bankService.depotDAO.findById(customerNr),stockValues);
+        return null;
     }
 
 
@@ -303,7 +317,6 @@ public class BankingInterfaceImpl implements BankingInterface {
 
     @Override
     public String getInvestableVolume() throws BankingInterfaceException {
-
         try{
             return bankService.bankDAO.findById(1).getInvestableVolume().toString();
         }catch (Exception e){
@@ -320,54 +333,67 @@ public class BankingInterfaceImpl implements BankingInterface {
     }
 
     private void buyNewShare(Depot depot, TradeDTO tradeDTO) {
-        System.out.println("buyNewShare");
-
-        FindStockQuotesByCompanyNameResponse response = null;
         try{
-            System.out.println(tradeDTO.getStockName().toString());
-            response = bankService.getFindStockQuotesByCompanyNameResponse(tradeDTO.getStockName());
-        }catch(Exception e){
-            System.out.println(e.toString());
-        }
+            System.out.println("buyNewShare");
 
-        System.out.println(response.toString());
+            FindStockQuotesByCompanyNameResponse response = null;
+            try{
+                System.out.println(tradeDTO.getStockName().toString());
+                response = bankService.getFindStockQuotesByCompanyNameResponse(tradeDTO.getStockName());
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
 
-        String symbol = null;
-        String fullcompanyName = null;
+            System.out.println(response.toString());
 
-        for (var stock : response.getReturn()) {
-            if (stock != null){
-                if(stock.getCompanyName().equals(tradeDTO.getStockName())){
-                    fullcompanyName = stock.getCompanyName();
-                    symbol = stock.getSymbol();
+            String symbol = null;
+            String fullcompanyName = null;
+
+            for (var stock : response.getReturn()) {
+                if (stock != null){
+                    if(stock.getCompanyName().equals(tradeDTO.getStockName())){
+                        fullcompanyName = stock.getCompanyName();
+                        symbol = stock.getSymbol();
+                    }
                 }
             }
-        }
 
-        if( symbol != null && fullcompanyName!= null){
-            Shares share = new Shares(depot, symbol, tradeDTO.getAmount(), fullcompanyName);
-            bankService.stockDAO.persist(share);
+            if( symbol != null && fullcompanyName!= null){
+                Shares share = new Shares(depot, symbol, tradeDTO.getAmount(), fullcompanyName);
+                bankService.stockDAO.persist(share);
 
-            if (depot.getShares() == null) {
-                depot.setShares(new ArrayList<>());
+                if (depot.getShares() == null) {
+                    depot.setShares(new ArrayList<>());
+                }
+
+                depot.getShares().add(share);
             }
-
-            depot.getShares().add(share);
+        }catch(Exception e){
+            System.out.println(e);
         }
     }
 
     private void buyMoreOfExistingShare(TradeDTO tradeDTO, Depot depot, Shares existingSharesEntry) {
-        existingSharesEntry.setStockShares(existingSharesEntry.getStockShares() + tradeDTO.getAmount());
-        bankService.stockDAO.merge(existingSharesEntry);
-        depot.getShares().removeIf(share -> tradeDTO.getStockName().equals(share.getStockName()));
-        depot.getShares().add(existingSharesEntry);
+        try{
+            existingSharesEntry.setStockShares(existingSharesEntry.getStockShares() + tradeDTO.getAmount());
+            bankService.stockDAO.merge(existingSharesEntry);
+            depot.getShares().removeIf(share -> tradeDTO.getStockName().equals(share.getStockName()));
+            depot.getShares().add(existingSharesEntry);
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     private Shares findExistingShare(TradeDTO tradeDTO, List<Shares> shares) {
-        return shares.stream()
-                .filter(share -> tradeDTO.getStockName().equals(share.getStockName()))
-                .findFirst()
-                .orElse(null);
+        try{
+            return shares.stream()
+                    .filter(share -> tradeDTO.getStockName().equals(share.getStockName()))
+                    .findFirst()
+                    .orElse(null);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 
     private void removeFromInvestableVolume(Bank bank, TradeDTO tradeDTO) {
