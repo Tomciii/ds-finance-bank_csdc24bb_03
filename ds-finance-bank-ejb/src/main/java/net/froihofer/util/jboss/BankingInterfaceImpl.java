@@ -80,7 +80,7 @@ public class BankingInterfaceImpl implements BankingInterface {
         String username = principal.getName();
         System.out.println("Logged-in User: " + username);
         // Check if the user is in a specific role
-        if (sessionContext.isCallerInRole("customer") && bankService.customerDAO.findByUsername(username)) {
+        if (sessionContext.isCallerInRole("customer") && bankService.customerDAO.userExists(username)) {
             System.out.println("User is Customer Role");
             return true;
         } else {
@@ -152,6 +152,7 @@ public class BankingInterfaceImpl implements BankingInterface {
                 System.out.println("Got Stock Info");
             }catch(Exception e){
                 System.out.println(e.toString());
+                return;
             }
 
             System.out.println(response.toString());
@@ -312,6 +313,17 @@ public class BankingInterfaceImpl implements BankingInterface {
     @Override
     public CustomerDTO searchCustomer(Integer customerNr) throws BankingInterfaceException {
         var customer = bankService.customerDAO.findById(customerNr);
+        return new CustomerDTO(customer.getCustomerNr(), customer.getName(), customer.getGivenname(), customer.getAddresse(), customer.getBankDepotID(), customer.getUsername(), customer.getPassword() );
+    }
+
+    @Override
+    public CustomerDTO searchCustomerByUsername(String username) {
+        var customer = bankService.customerDAO.findByUsername(username);
+
+        if (customer == null) {
+            return null;
+        }
+
         return new CustomerDTO(customer.getCustomerNr(), customer.getName(), customer.getGivenname(), customer.getAddresse(), customer.getBankDepotID(), customer.getUsername(), customer.getPassword() );
     }
 

@@ -50,6 +50,14 @@ class BankClientInputHandler {
         }
     }
 
+    public void searchCustomerByUsername() {
+        String customerNumber = CommonInputHandler.getUsername();
+            CustomerDTO value = bankingInterface.searchCustomerByUsername(customerNumber);
+
+            if (value != null)
+                System.out.println(value);
+    }
+
     public void buyStockForCustomer() {
         System.out.println("Buying Stock: ");
         String customerID = CommonInputHandler.getCustomerID();

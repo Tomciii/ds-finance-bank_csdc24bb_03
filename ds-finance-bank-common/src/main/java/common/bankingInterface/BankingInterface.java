@@ -31,6 +31,8 @@ public interface BankingInterface {
 
     CustomerDTO searchCustomer(Integer customerNr)  throws BankingInterfaceException;
 
+    CustomerDTO searchCustomerByUsername(String username);
+
     String getInvestableVolume() throws BankingInterfaceException;
 
 

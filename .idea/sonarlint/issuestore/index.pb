@@ -70,16 +70,10 @@ Xds-finance-bank-ejb/src/main/java/net/froihofer/util/jboss/util/WildflyAuthDBHe
 [ds-finance-bank-ejb/src/main/java/net/froihofer/util/jboss/persistance/dao/EmployeeDAO.java,f\1\f19fc399f4aa3dea8ecd2596a6213cb2eecdeba5
 
 _ds-finance-bank-ejb/src/main/java/net/froihofer/util/jboss/persistance/mapper/SharesMapper.java,a\3\a37d20dfcb9c69e5701ad9e6c9d60e47f4c92631
-‰
-Yds-finance-bank-ejb/src/main/java/net/froihofer/util/jboss/persistance/dao/SharesDAO.java,9\b\9b3416916b7e3907f97e8d2364d6e8e18821b496
 ˆ
 Xds-finance-bank-ejb/src/main/java/net/froihofer/util/jboss/persistance/entity/Depot.java,0\6\0641a46afd70b151971853bf0f39e53dbc4d3f59
-‰
-Yds-finance-bank-ejb/src/main/java/net/froihofer/util/jboss/persistance/entity/Shares.java,e\c\ec8671069c537b44a4eda1979f0a6af93d95bffd
 ‹
 [ds-finance-bank-ejb/src/main/java/net/froihofer/util/jboss/persistance/entity/Customer.java,e\0\e00916504ee74f641da32215ce2f9b677f4262bc
-‹
-[ds-finance-bank-ejb/src/main/java/net/froihofer/util/jboss/persistance/dao/CustomerDAO.java,d\c\dccceec836ef2688d70de46faf5e6d292abe1025
 ‹
 [ds-finance-bank-common/src/main/java/common/bankingInterface/BankingInterfaceException.java,5\f\5f1f5123b0f6058d314ed6383e56433bd4f64d43
 m
@@ -92,3 +86,7 @@ n
 >ds-finance-bank-common/src/main/java/common/dto/SharesDTO.java,1\9\19e687f09695160c1458e1f230f1da0c30b4f5a4
 m
 =ds-finance-bank-common/src/main/java/common/dto/StockDTO.java,3\2\3273138ed14c1a38305919255eb1e3d7b90c17fc
+‘
+ads-finance-bank-client/src/main/java/net/froihofer/dsfinance/bank/client/customer/BankClient.java,a\8\a8df0335c309432f4c97cc5b874c90208d5a09b5
+‘
+ads-finance-bank-client/src/main/java/net/froihofer/dsfinance/bank/client/employee/BankClient.java,6\d\6de7cc9128df74bdea72745452ed61741babbc37
