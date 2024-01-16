@@ -123,4 +123,12 @@ class BankClientInputHandler {
         System.out.println("Depot Info: ");
         CommonInputHandler.printDepotInfo(1, bankingInterface);
     }
+
+    public void searchCustomerByUsername() {
+        String customerNumber = CommonInputHandler.getUsername();
+        CustomerDTO value = bankingInterface.searchCustomerByUsername(customerNumber);
+
+        if (value != null)
+            System.out.println(value);
+    }
 }

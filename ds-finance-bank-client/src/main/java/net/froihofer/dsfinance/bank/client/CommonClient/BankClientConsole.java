@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 
 class BankClientConsole {
-    private static Logger log = LoggerFactory.getLogger(BankClientConsole.class);
+    private static Logger loyeepasog = LoggerFactory.getLogger(BankClientConsole.class);
     private Scanner scanner = new Scanner(System.in);
     private BankClientInputHandler inputHandler = new BankClientInputHandler();
 
@@ -55,6 +55,9 @@ class BankClientConsole {
                                 break;
                             case "7":
                                 inputHandler.displayInvestableVolume();
+                                break;
+                            case "8":
+                                inputHandler.searchCustomerByUsername();
                                 break;
                             case "HELP":
                                 this.displayActions();
@@ -120,6 +123,7 @@ class BankClientConsole {
         System.out.println("Enter '5' to sell stocks for a customer");
         System.out.println("Enter '6' to display depot details of a customer");
         System.out.println("Enter '7' to search the investable volume");
+        System.out.println("Enter '8' to search a customer via username");
         System.out.println("Enter 'HELP' to display all possible actions");
         System.out.println("Enter 'EXIT' to exit");
     }
